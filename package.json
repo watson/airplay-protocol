@@ -1,0 +1,43 @@
+{
+  "name": "airplay-protocol",
+  "version": "0.0.0",
+  "description": "A low level protocol wrapper on top of the AirPlay HTTP API",
+  "main": "index.js",
+  "dependencies": {
+    "bplist-creator": "^0.0.6",
+    "bplist-parser": "^0.1.1",
+    "plist": "^1.2.0",
+    "reverse-http": "^1.0.1",
+    "request": "^2.72.0"
+  },
+  "devDependencies": {
+    "standard": "^6.0.8",
+    "server-destroy": "^1.0.1",
+    "tape": "^4.5.1"
+  },
+  "scripts": {
+    "test": "standard && tape test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/watson/airplay-protocol.git"
+  },
+  "keywords": [
+    "airplay",
+    "protcol",
+    "http",
+    "api",
+    "video",
+    "stream",
+    "streaming"
+  ],
+  "engines": {
+    "node": ">= 0.12"
+  },
+  "author": "Thomas Watson Steen <w@tson.dk> (https://twitter.com/wa7son)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/watson/airplay-protocol/issues"
+  },
+  "homepage": "https://github.com/watson/airplay-protocol#readme"
+}
