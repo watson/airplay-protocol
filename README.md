@@ -13,10 +13,10 @@ npm install airplay-protocol --save
 
 ## API
 
-### `new AirPlay(ip[, port])`
+### `new AirPlay(host[, port])`
 
-Initiate a connection to a specific AirPlay server given an IP address
-and port. If no port is given, the default port 7000 is used.
+Initiate a connection to a specific AirPlay server given a host or IP
+address and a port. If no port is given, the default port 7000 is used.
 
 Returns an instance of the AirPlay object.
 
