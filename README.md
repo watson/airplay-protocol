@@ -14,6 +14,23 @@ Currently only the video API is implemented.
 npm install airplay-protocol --save
 ```
 
+## Example Usage
+
+```js
+var AirPlay = require('airplay-protocol')
+
+var airplay = new AirPlay('apple-tv.local')
+
+airplay.play('http://example.com/video.m4v', function (err) {
+  if (err) throw err
+
+  airplay.playbackInfo(function (err, res, body) {
+    if (err) throw err
+    console.log('Playback info:', body)
+  })
+})
+```
+
 ## API
 
 ### `new AirPlay(host[, port])`
