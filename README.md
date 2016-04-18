@@ -61,8 +61,12 @@ Possible states: `loading`, `playing`, `paused` or `stopped`.
 
 Get the AirPlay server info.
 
-Calls the callback with the plist result as the second argument or
-optionally an error object as the first argument.
+Arguments:
+
+- `callback` - Will be called when the request have been processed by
+  the AirPlay server. The first argument is an optional Error object.
+  The second argument is an instance of [`http.IncomingMessage`][1] and
+  the third argument is a parsed plist object containing the server info
 
 ### `airplay.play(url[, position][, callback])`
 
@@ -74,9 +78,10 @@ Arguments:
 - `position` - Optional start position. A floating point number between
   `0` and `1` where `0` represents the begining of the video and `1` the
   end. Defaults to `0`
-- `callback` - Optional callback. Will be called when the play request
-  have been processed by the AirPlay server. An error object may be
-  given as the first argument
+- `callback` (optional) - Will be called when the request have been
+  processed by the AirPlay server. The first argument is an optional
+  Error object. The second argument is an instance of
+  [`http.IncomingMessage`][1]
 
 ### `airplay.scrub(callback)`
 
@@ -84,8 +89,10 @@ Retrieve the current playback position.
 
 Arguments:
 
-- `callback` - Will be called with the current playback position as the
-  second argument. An error object may be given as the first argument
+- `callback` - Will be called when the request have been processed by
+  the AirPlay server. The first argument is an optional Error object.
+  The second argument is an instance of [`http.IncomingMessage`][1] and
+  the third argument is the current playback position
 
 ### `airplay.scrub(position[, callback])`
 
@@ -94,9 +101,10 @@ Seek to an arbitrary location in the video.
 Arguments:
 
 - `position` - A float value representing the location in seconds
-- `callback` - Optional callback. Will be called when the scrub request
-  have been processed by the AirPlay server. An error object may be
-  given as the first argument
+- `callback` (optional) - Will be called when the request have been
+  processed by the AirPlay server. The first argument is an optional
+  Error object. The second argument is an instance of
+  [`http.IncomingMessage`][1]
 
 ### `airplay.rate(speed[, callback])`
 
@@ -106,9 +114,10 @@ Arguments:
 
 - `speed` - A float value representing the playback rate: 0 is paused, 1
   is playing at the normal speed
-- `callback` - Optional callback. Will be called when the scrub request
-  have been processed by the AirPlay server. An error object may be
-  given as the first argument
+- `callback` (optional) - Will be called when the request have been
+  processed by the AirPlay server. The first argument is an optional
+  Error object. The second argument is an instance of
+  [`http.IncomingMessage`][1]
 
 ### `airplay.stop([callback])`
 
@@ -119,6 +128,10 @@ Arguments:
 - `callback` - Optional callback. Will be called when the stop request
   have been processed by the AirPlay server. An error object may be
   given as the first argument
+- `callback` (optional) - Will be called when the request have been
+  processed by the AirPlay server. The first argument is an optional
+  Error object. The second argument is an instance of
+  [`http.IncomingMessage`][1]
 
 ### `airplay.playbackInfo(callback)`
 
@@ -127,8 +140,10 @@ buffering status and more.
 
 Arguments:
 
-- `callback` - Will be called with a playback-info object as the second
-  argument. An error object may be given as the first argument
+- `callback` - Will be called when the request have been processed by
+  the AirPlay server. The first argument is an optional Error object.
+  The second argument is an instance of [`http.IncomingMessage`][1] and
+  the third argument is a parsed plist object containing the playback info
 
 ### `airplay.property(name, callback)`
 
@@ -137,8 +152,10 @@ Get playback property.
 Arguments:
 
 - `name` - The name of the property to get
-- `callback` - Will be called with the property value as the second
-  argument. An error object may be given as the first argument
+- `callback` - Will be called when the request have been processed by
+  the AirPlay server. The first argument is an optional Error object.
+  The second argument is an instance of [`http.IncomingMessage`][1] and
+  the third argument is a parsed plist object containing the property
 
 ### `airplay.property(name, value[, callback])`
 
@@ -148,10 +165,12 @@ Arguments:
 
 - `name` - The name of the property to set
 - `value` - The plist object to set
-- `callback` - Optional callback. Will be called when the set-property
-  request have been processed by the AirPlay server. An error object may
-  be given as the first argument
+- `callback` - Will be called when the request have been processed by
+  the AirPlay server. The first argument is an optional Error object.
+  The second argument is an instance of [`http.IncomingMessage`][1]
 
 ## License
 
 MIT
+
+[1]: https://nodejs.org/api/http.html#http_class_http_incomingmessage
