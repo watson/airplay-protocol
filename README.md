@@ -75,9 +75,9 @@ Start video playback.
 Arguments:
 
 - `url` - The URL to play
-- `position` - Optional start position. A floating point number between
-  `0` and `1` where `0` represents the begining of the video and `1` the
-  end. Defaults to `0`
+- `position` (optional) - A floating point number between `0` and `1`
+  where `0` represents the begining of the video and `1` the end.
+  Defaults to `0`
 - `callback` (optional) - Will be called when the request have been
   processed by the AirPlay server. The first argument is an optional
   Error object. The second argument is an instance of
@@ -125,9 +125,6 @@ Stop playback.
 
 Arguments:
 
-- `callback` - Optional callback. Will be called when the stop request
-  have been processed by the AirPlay server. An error object may be
-  given as the first argument
 - `callback` (optional) - Will be called when the request have been
   processed by the AirPlay server. The first argument is an optional
   Error object. The second argument is an instance of
@@ -165,9 +162,10 @@ Arguments:
 
 - `name` - The name of the property to set
 - `value` - The plist object to set
-- `callback` - Will be called when the request have been processed by
-  the AirPlay server. The first argument is an optional Error object.
-  The second argument is an instance of [`http.IncomingMessage`][1]
+- `callback` (optional) - Will be called when the request have been
+  processed by the AirPlay server. The first argument is an optional
+  Error object. The second argument is an instance of
+  [`http.IncomingMessage`][1]
 
 ## License
 
