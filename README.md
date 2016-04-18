@@ -3,6 +3,8 @@
 A low level protocol wrapper on top of the AirPlay HTTP API used to
 connect to an Apple TV.
 
+Currently only the video API is implemented.
+
 [![Build status](https://travis-ci.org/watson/airplay-protocol.svg?branch=master)](https://travis-ci.org/watson/airplay-protocol)
 [![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat)](https://github.com/feross/standard)
 
