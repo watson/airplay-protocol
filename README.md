@@ -70,6 +70,11 @@ Example state object:
 
 Possible states: `loading`, `playing`, `paused` or `stopped`.
 
+### `airplay.state`
+
+Property holding the latest state object emitted. Will be `undefined` if
+no `state` event have been emitted yet.
+
 ### `airplay.serverInfo(callback)`
 
 Get the AirPlay server info.

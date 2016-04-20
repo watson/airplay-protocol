@@ -28,6 +28,27 @@ test('setup reverse HTTP', function (t) {
   })
 })
 
+test('airplay.state', function (t) {
+  var server = http.createServer()
+
+  enableDestroy(server)
+
+  server.on('upgrade', onUpgrade)
+
+  server.listen(function () {
+    var airplay = new AirPlay('localhost', server.address().port)
+
+    t.equal(airplay.state, undefined)
+
+    airplay.on('state', function (state) {
+      airplay.close()
+      server.destroy()
+      t.equal(airplay.state, state)
+      t.end()
+    })
+  })
+})
+
 test('serverInfo', function (t) {
   var server = http.createServer(function (req, res) {
     t.equal(req.method, 'GET')
