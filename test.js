@@ -184,6 +184,56 @@ test('rate', function (t) {
   })
 })
 
+test('pause', function (t) {
+  var server = http.createServer(function (req, res) {
+    t.equal(req.method, 'POST')
+    t.equal(req.url, '/rate?value=0')
+    res.end()
+  })
+
+  enableDestroy(server)
+
+  server.on('upgrade', onUpgrade)
+
+  server.listen(function () {
+    var airplay = new AirPlay('localhost', server.address().port)
+
+    airplay.pause(function (err, res, body) {
+      airplay.close()
+      server.destroy()
+      t.error(err)
+      t.equal(res.statusCode, 200)
+      t.deepEqual(body, Buffer(0))
+      t.end()
+    })
+  })
+})
+
+test('resume', function (t) {
+  var server = http.createServer(function (req, res) {
+    t.equal(req.method, 'POST')
+    t.equal(req.url, '/rate?value=1')
+    res.end()
+  })
+
+  enableDestroy(server)
+
+  server.on('upgrade', onUpgrade)
+
+  server.listen(function () {
+    var airplay = new AirPlay('localhost', server.address().port)
+
+    airplay.resume(function (err, res, body) {
+      airplay.close()
+      server.destroy()
+      t.error(err)
+      t.equal(res.statusCode, 200)
+      t.deepEqual(body, Buffer(0))
+      t.end()
+    })
+  })
+})
+
 test('stop', function (t) {
   var server = http.createServer(function (req, res) {
     t.equal(req.method, 'POST')

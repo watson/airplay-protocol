@@ -93,6 +93,14 @@ AirPlay.prototype.rate = function rate (speed, cb) {
   this._request('POST', '/rate?value=' + speed, cb || noop)
 }
 
+AirPlay.prototype.pause = function pause (cb) {
+  this.rate(0, cb)
+}
+
+AirPlay.prototype.resume = function pause (cb) {
+  this.rate(1, cb)
+}
+
 AirPlay.prototype.stop = function stop (cb) {
   this._request('POST', '/stop', cb || noop)
 }

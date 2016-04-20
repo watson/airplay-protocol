@@ -119,6 +119,18 @@ Arguments:
   Error object. The second argument is an instance of
   [`http.IncomingMessage`][1]
 
+### `airplay.pause([callback])`
+
+Pause playback.
+
+Alias for `airplay.rate(0, callback)`.
+
+### `airplay.resume([callback])`
+
+Resume playback.
+
+Alias for `airplay.rate(1, callback)`.
+
 ### `airplay.stop([callback])`
 
 Stop playback.
