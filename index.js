@@ -19,12 +19,11 @@ util.inherits(AirPlay, EventEmitter)
 
 function AirPlay (host, port) {
   if (!(this instanceof AirPlay)) return new AirPlay(host, port)
-  if (!port) port = 7000
 
   EventEmitter.call(this)
 
   this.host = host
-  this.port = port
+  this.port = port || 7000
 
   // TODO: It might be smart to wait starting this until we play and then close
   // it when we're done playing
