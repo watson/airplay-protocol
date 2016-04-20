@@ -55,6 +55,19 @@ function (state) {}
 Emitted by the AirPlay server every time the state of the playback
 changes.
 
+Example state object:
+
+```js
+{
+  category: 'video',
+  params: {
+    uuid: 'D90C289F-DE6A-480C-A741-1DA92CEEE8C3-40-00000004654E2487'
+  },
+  sessionID: 3,
+  state: 'loading'
+}
+```
+
 Possible states: `loading`, `playing`, `paused` or `stopped`.
 
 ### `airplay.serverInfo(callback)`
