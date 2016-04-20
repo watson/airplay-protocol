@@ -2,6 +2,7 @@
 
 var util = require('util')
 var EventEmitter = require('events').EventEmitter
+var concat = require('concat-stream')
 var reverseHttp = require('reverse-http')
 var request = require('request')
 var plist = require('plist')
@@ -41,12 +42,8 @@ AirPlay.prototype._startReverse = function () {
       return
     }
 
-    var buffers = []
-    req.on('data', buffers.push.bind(buffers))
-    req.on('end', function () {
+    req.pipe(concat(function (data) {
       res.end()
-
-      var data = Buffer.concat(buffers)
 
       switch (req.headers['content-type']) {
         case 'text/x-apple-plist+xml':
@@ -56,7 +53,7 @@ AirPlay.prototype._startReverse = function () {
       }
 
       self.emit('state', data)
-    })
+    }))
   })
 }
 
