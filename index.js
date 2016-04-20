@@ -136,7 +136,7 @@ AirPlay.prototype._request = function _request (method, path, body, cb) {
         body = body.toString().trim().split('\n').reduce(function (body, line) {
           line = line.split(': ')
           // TODO: For now it's only floats, but it might be better to not expect that
-          body[line[0]] = Number.parseFloat(line[1], 10)
+          body[line[0]] = parseFloat(line[1], 10)
           return body
         }, {})
         break
