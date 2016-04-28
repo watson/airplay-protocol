@@ -11,6 +11,7 @@ var bplist = {
   decode: require('bplist-parser').parseBuffer
 }
 
+var USER_AGENT = 'iTunes/11.0.2'
 var noop = function () {}
 
 module.exports = AirPlay
@@ -32,8 +33,16 @@ function AirPlay (host, port) {
 
 AirPlay.prototype._startReverse = function () {
   var self = this
+  var opts = {
+    hostname: this.host,
+    port: this.port,
+    path: '/reverse',
+    headers: {
+      'User-Agent': USER_AGENT
+    }
+  }
 
-  this._rserver = reverseHttp({ hostname: this.host, port: this.port, path: '/reverse' }, function (req, res) {
+  this._rserver = reverseHttp(opts, function (req, res) {
     if (req.method !== 'POST' || req.url !== '/event') {
       // TODO: Maybe we should just accept it silently?
       res.statusCode = 404
@@ -159,7 +168,7 @@ AirPlay.prototype._reqOpts = function _reqOpts (method, path, body) {
     method: method,
     url: 'http://' + this.host + ':' + this.port + path,
     headers: {
-      'User-Agent': 'iTunes/11.0.2'
+      'User-Agent': USER_AGENT
     },
     encoding: null, // In case a binary plist is returned we don't want to convert it to a string
     forever: true // The Apple TV will refuse to play if the play socket is closed
