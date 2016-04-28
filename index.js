@@ -34,7 +34,7 @@ function AirPlay (host, port) {
 AirPlay.prototype._startReverse = function () {
   var self = this
   var opts = {
-    hostname: this.host,
+    host: this.host,
     port: this.port,
     path: '/reverse',
     headers: {
