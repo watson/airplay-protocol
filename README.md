@@ -49,16 +49,17 @@ var AirPlay = require('airplay-protocol')
 var airplay = new AirPlay('192.168.0.42', 7000)
 ```
 
-### Event: `state`
+### Event: `event`
 
 ```js
-function (state) {}
+function (event) {}
 ```
 
-Emitted by the AirPlay server every time the state of the playback
-changes.
+Emitted every time the AirPlay server sends an event. Events can hold
+different types of data, but will among other things be used to send
+updates to the playback state.
 
-Example state object:
+Example event object indicating the state of the playback have changed:
 
 ```js
 {
@@ -71,12 +72,27 @@ Example state object:
 }
 ```
 
-Possible states: `loading`, `playing`, `paused` or `stopped`.
+The `event.params` property can potentially hold a lot more data than
+shown in this example.
+
+Example event object indicating an update to the access log:
+
+```js
+{
+  params: {
+    uuid: '96388EC8-05C8-4BC4-A8EB-E9B6FCEB1A55-41-000000135E436A63'
+  },
+  sessionID: 0,
+  type: 'accessLogChanged'
+}
+```
 
 ### `airplay.state`
 
-Property holding the latest state object emitted. Will be `undefined` if
-no `state` event have been emitted yet.
+Property holding the latest playback state emitted by the `event` event.
+Will be `undefined` if no `event` event have been emitted yet.
+
+Possible states: `loading`, `playing`, `paused` or `stopped`.
 
 ### `airplay.serverInfo(callback)`
 

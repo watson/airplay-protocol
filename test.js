@@ -20,10 +20,10 @@ test('setup reverse HTTP', function (t) {
   server.listen(function () {
     var airplay = new AirPlay('localhost', server.address().port)
 
-    airplay.on('state', function (state) {
+    airplay.on('event', function (event) {
       airplay.close()
       server.destroy()
-      t.deepEqual(state, { category: 'video', sessionID: 13, state: 'paused' })
+      t.deepEqual(event, { category: 'video', sessionID: 13, state: 'paused' })
     })
   })
 })
@@ -40,10 +40,10 @@ test('airplay.state', function (t) {
 
     t.equal(airplay.state, undefined)
 
-    airplay.on('state', function (state) {
+    airplay.on('event', function (event) {
       airplay.close()
       server.destroy()
-      t.equal(airplay.state, state)
+      t.equal(airplay.state, event.state)
       t.end()
     })
   })

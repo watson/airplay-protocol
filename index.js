@@ -57,11 +57,11 @@ AirPlay.prototype._startReverse = function () {
         case 'text/x-apple-plist+xml':
         case 'application/x-apple-plist':
           data = plist.parse(data.toString())
+          if (data && data.state) self.state = data.state
           break
       }
 
-      self.state = data
-      self.emit('state', data)
+      self.emit('event', data)
     }))
   })
 }
