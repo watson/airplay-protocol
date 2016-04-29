@@ -1,10 +1,10 @@
 'use strict'
 
 var util = require('util')
+var http = require('http')
 var EventEmitter = require('events').EventEmitter
 var concat = require('concat-stream')
 var reverseHttp = require('reverse-http')
-var request = require('request')
 var plist = require('plist')
 var bplist = {
   encode: require('bplist-creator'),
@@ -25,6 +25,11 @@ function AirPlay (host, port) {
 
   this.host = host
   this.port = port || 7000
+
+  this._agent = new http.Agent({
+    keepAlive: true,
+    maxSockets: 1
+  })
 
   // TODO: It might be smart to wait starting this until we play and then close
   // it when we're done playing
@@ -138,48 +143,60 @@ AirPlay.prototype._request = function _request (method, path, body, cb) {
 
   var opts = this._reqOpts(method, path, body)
 
-  request(opts, function (err, res, body) {
-    if (err) return cb(err, res, body)
-    if (res.statusCode !== 200) err = new Error('Unexpected response from Apple TV: ' + res.statusCode)
+  var req = http.request(opts, function (res) {
+    if (res.statusCode !== 200) var err = new Error('Unexpected response from Apple TV: ' + res.statusCode)
 
-    switch (res.headers['content-type']) {
-      case 'application/x-apple-binary-plist':
-        body = bplist.decode(body)[0]
-        break
-      case 'text/x-apple-plist+xml':
-        body = plist.parse(body.toString())
-        break
-      case 'text/parameters':
-        body = body.toString().trim().split('\n').reduce(function (body, line) {
-          line = line.split(': ')
-          // TODO: For now it's only floats, but it might be better to not expect that
-          body[line[0]] = parseFloat(line[1], 10)
-          return body
-        }, {})
-        break
-    }
+    var buffers = []
+    res.on('data', buffers.push.bind(buffers))
+    res.on('end', function () {
+      var body = Buffer.concat(buffers)
 
-    cb(err, res, body)
+      switch (res.headers['content-type']) {
+        case 'application/x-apple-binary-plist':
+          body = bplist.decode(body)[0]
+          break
+        case 'text/x-apple-plist+xml':
+          body = plist.parse(body.toString())
+          break
+        case 'text/parameters':
+          body = body.toString().trim().split('\n').reduce(function (body, line) {
+            line = line.split(': ')
+            // TODO: For now it's only floats, but it might be better to not expect that
+            body[line[0]] = parseFloat(line[1], 10)
+            return body
+          }, {})
+          break
+      }
+
+      cb(err, res, body)
+    })
   })
+
+  req.end(opts.body)
 }
 
 AirPlay.prototype._reqOpts = function _reqOpts (method, path, body) {
   var opts = {
+    host: this.host,
+    port: this.port,
     method: method,
-    url: 'http://' + this.host + ':' + this.port + path,
+    path: path,
     headers: {
       'User-Agent': USER_AGENT
     },
-    encoding: null, // In case a binary plist is returned we don't want to convert it to a string
-    forever: true // The Apple TV will refuse to play if the play socket is closed
+    agent: this._agent // The Apple TV will refuse to play if the play socket is closed
   }
 
   if (body && typeof body === 'object') {
-    opts.headers['Content-Type'] = 'application/x-apple-binary-plist'
     opts.body = bplist.encode(body)
+    opts.headers['Content-Type'] = 'application/x-apple-binary-plist'
+    opts.headers['Content-Length'] = opts.body.length
   } else if (typeof body === 'string') {
-    opts.headers['Content-Type'] = 'text/parameters'
     opts.body = body
+    opts.headers['Content-Type'] = 'text/parameters'
+    opts.headers['Content-Length'] = Buffer.byteLength(opts.body)
+  } else {
+    opts.headers['Content-Length'] = 0
   }
 
   return opts

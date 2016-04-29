@@ -8,7 +8,6 @@
     "bplist-parser": "^0.1.1",
     "concat-stream": "^1.5.1",
     "plist": "^1.2.0",
-    "request": "^2.72.0",
     "reverse-http": "^1.1.0"
   },
   "devDependencies": {
