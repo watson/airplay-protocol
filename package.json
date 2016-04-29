@@ -1,6 +1,6 @@
 {
   "name": "airplay-protocol",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "A low level protocol wrapper on top of the AirPlay HTTP API",
   "main": "index.js",
   "dependencies": {
@@ -40,7 +40,7 @@
   },
   "homepage": "https://github.com/watson/airplay-protocol#readme",
   "coordinates": [
-    52.4930914,
-    13.4230081
+    52.53084639999999,
+    13.3838021
   ]
 }
