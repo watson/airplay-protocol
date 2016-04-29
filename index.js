@@ -83,6 +83,11 @@ AirPlay.prototype.destroy = function () {
       socket.destroy()
     })
   })
+  Object.keys(this._agent.freeSockets).forEach(function (remote) {
+    self._agent.freeSockets[remote].forEach(function (socket) {
+      socket.destroy()
+    })
+  })
 }
 
 AirPlay.prototype.serverInfo = function serverInfo (cb) {
