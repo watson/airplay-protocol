@@ -75,6 +75,16 @@ AirPlay.prototype.close = function (cb) {
   this._rserver.close(cb)
 }
 
+AirPlay.prototype.destroy = function () {
+  var self = this
+  this._rserver.destroy()
+  Object.keys(this._agent.sockets).forEach(function (remote) {
+    self._agent.sockets[remote].forEach(function (socket) {
+      socket.destroy()
+    })
+  })
+}
+
 AirPlay.prototype.serverInfo = function serverInfo (cb) {
   this._request('GET', '/server-info', cb)
 }

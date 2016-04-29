@@ -2,7 +2,6 @@
 
 var test = require('tape')
 var http = require('http')
-var enableDestroy = require('server-destroy')
 var bplist = require('bplist-parser')
 var AirPlay = require('./')
 
@@ -17,7 +16,6 @@ test('setup reverse HTTP', function (t) {
 
   server.listen(function () {
     var airplay = new AirPlay('localhost', server.address().port)
-    enableDestroy(airplay)
 
     airplay.on('event', function (event) {
       server.close()
@@ -34,7 +32,6 @@ test('airplay.state', function (t) {
 
   server.listen(function () {
     var airplay = new AirPlay('localhost', server.address().port)
-    enableDestroy(airplay)
 
     t.equal(airplay.state, undefined)
 
@@ -58,7 +55,6 @@ test('serverInfo', function (t) {
 
   server.listen(function () {
     var airplay = new AirPlay('localhost', server.address().port)
-    enableDestroy(airplay)
 
     airplay.serverInfo(function (err, res, body) {
       server.close()
@@ -85,7 +81,6 @@ test('play', function (t) {
 
   server.listen(function () {
     var airplay = new AirPlay('localhost', server.address().port)
-    enableDestroy(airplay)
 
     airplay.play('foo', function (err, res, body) {
       server.close()
@@ -112,7 +107,6 @@ test('play', function (t) {
 
   server.listen(function () {
     var airplay = new AirPlay('localhost', server.address().port)
-    enableDestroy(airplay)
 
     airplay.play('foo', 0.42, function (err, res, body) {
       server.close()
@@ -136,7 +130,6 @@ test('get scrub', function (t) {
 
   server.listen(function () {
     var airplay = new AirPlay('localhost', server.address().port)
-    enableDestroy(airplay)
 
     airplay.scrub(function (err, res, body) {
       server.close()
@@ -160,7 +153,6 @@ test('set scrub', function (t) {
 
   server.listen(function () {
     var airplay = new AirPlay('localhost', server.address().port)
-    enableDestroy(airplay)
 
     airplay.scrub(42, function (err, res, body) {
       server.close()
@@ -184,7 +176,6 @@ test('rate', function (t) {
 
   server.listen(function () {
     var airplay = new AirPlay('localhost', server.address().port)
-    enableDestroy(airplay)
 
     airplay.rate(0.42, function (err, res, body) {
       server.close()
@@ -208,7 +199,6 @@ test('pause', function (t) {
 
   server.listen(function () {
     var airplay = new AirPlay('localhost', server.address().port)
-    enableDestroy(airplay)
 
     airplay.pause(function (err, res, body) {
       server.close()
@@ -232,7 +222,6 @@ test('resume', function (t) {
 
   server.listen(function () {
     var airplay = new AirPlay('localhost', server.address().port)
-    enableDestroy(airplay)
 
     airplay.resume(function (err, res, body) {
       server.close()
@@ -256,7 +245,6 @@ test('stop', function (t) {
 
   server.listen(function () {
     var airplay = new AirPlay('localhost', server.address().port)
-    enableDestroy(airplay)
 
     airplay.stop(function (err, res, body) {
       server.close()
@@ -280,7 +268,6 @@ test('playbackInfo', function (t) {
 
   server.listen(function () {
     var airplay = new AirPlay('localhost', server.address().port)
-    enableDestroy(airplay)
 
     airplay.playbackInfo(function (err, res, body) {
       server.close()
@@ -304,7 +291,6 @@ test('get property', function (t) {
 
   server.listen(function () {
     var airplay = new AirPlay('localhost', server.address().port)
-    enableDestroy(airplay)
 
     airplay.property('foo', function (err, res, body) {
       server.close()
@@ -331,7 +317,6 @@ test('set property', function (t) {
 
   server.listen(function () {
     var airplay = new AirPlay('localhost', server.address().port)
-    enableDestroy(airplay)
 
     airplay.property('foo', { foo: 'bar' }, function (err, res, body) {
       server.close()

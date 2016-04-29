@@ -216,6 +216,10 @@ Arguments:
   Error object. The second argument is an instance of
   [`http.IncomingMessage`][1]
 
+### `airplay.destroy()`
+
+Destroy the reverse-http server set up to receive AirPlay events.
+
 ## License
 
 MIT
