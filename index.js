@@ -30,13 +30,11 @@ function AirPlay (host, port) {
     keepAlive: true,
     maxSockets: 1
   })
-
-  // TODO: It might be smart to wait starting this until we play and then close
-  // it when we're done playing
-  this._startReverse()
 }
 
 AirPlay.prototype._startReverse = function () {
+  if (this._rserver) this._rserver.destroy()
+
   var self = this
   var opts = {
     host: this.host,
@@ -86,6 +84,8 @@ AirPlay.prototype.serverInfo = function serverInfo (cb) {
 
 AirPlay.prototype.play = function play (url, position, cb) {
   if (typeof position === 'function') return this.play(url, 0, position)
+
+  this._startReverse()
 
   var body = 'Content-Location: ' + url + '\n' +
              'Start-Position: ' + position + '\n'
