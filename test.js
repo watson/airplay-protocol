@@ -17,6 +17,8 @@ test('setup reverse HTTP', function (t) {
   server.listen(function () {
     var airplay = new AirPlay('localhost', server.address().port)
 
+    airplay._startReverse()
+
     airplay.on('event', function (event) {
       server.close()
       airplay.destroy()
@@ -32,6 +34,8 @@ test('airplay.state', function (t) {
 
   server.listen(function () {
     var airplay = new AirPlay('localhost', server.address().port)
+
+    airplay._startReverse()
 
     t.equal(airplay.state, undefined)
 
