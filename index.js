@@ -73,11 +73,11 @@ AirPlay.prototype._startReverse = function () {
 }
 
 AirPlay.prototype.close = function (cb) {
-  this._rserver.close(cb)
+  if (this._rserver) this._rserver.close(cb)
 }
 
 AirPlay.prototype.destroy = function () {
-  this._rserver.destroy()
+  if (this._rserver) this._rserver.destroy()
   this._agent.destroy()
 }
 
