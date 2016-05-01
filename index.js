@@ -32,46 +32,6 @@ function AirPlay (host, port) {
   })
 }
 
-AirPlay.prototype._startReverse = function _startReverse () {
-  if (this._rserver) this._rserver.destroy()
-
-  var self = this
-  var opts = {
-    host: this.host,
-    port: this.port,
-    path: '/reverse',
-    headers: {
-      'User-Agent': USER_AGENT
-    }
-  }
-
-  this._rserver = reverseHttp(opts, function (req, res) {
-    if (req.method !== 'POST' || req.url !== '/event') {
-      // TODO: Maybe we should just accept it silently?
-      res.statusCode = 404
-      res.end()
-      return
-    }
-
-    req.pipe(concat(function (data) {
-      res.end()
-
-      switch (req.headers['content-type']) {
-        case 'text/x-apple-plist+xml':
-        case 'application/x-apple-plist':
-          data = plist.parse(data.toString())
-          if (data && data.state) {
-            self.state = data.state
-            if (self.state === 'stopped') self.destroy()
-          }
-          break
-      }
-
-      self.emit('event', data)
-    }))
-  })
-}
-
 AirPlay.prototype.close = function close (cb) {
   if (this._rserver) this._rserver.close(cb)
 }
@@ -209,4 +169,44 @@ AirPlay.prototype._request = function _request (method, path, body, cb) {
   })
 
   req.end(body)
+}
+
+AirPlay.prototype._startReverse = function _startReverse () {
+  if (this._rserver) this._rserver.destroy()
+
+  var self = this
+  var opts = {
+    host: this.host,
+    port: this.port,
+    path: '/reverse',
+    headers: {
+      'User-Agent': USER_AGENT
+    }
+  }
+
+  this._rserver = reverseHttp(opts, function (req, res) {
+    if (req.method !== 'POST' || req.url !== '/event') {
+      // TODO: Maybe we should just accept it silently?
+      res.statusCode = 404
+      res.end()
+      return
+    }
+
+    req.pipe(concat(function (data) {
+      res.end()
+
+      switch (req.headers['content-type']) {
+        case 'text/x-apple-plist+xml':
+        case 'application/x-apple-plist':
+          data = plist.parse(data.toString())
+          if (data && data.state) {
+            self.state = data.state
+            if (self.state === 'stopped') self.destroy()
+          }
+          break
+      }
+
+      self.emit('event', data)
+    }))
+  })
 }
