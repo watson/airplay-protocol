@@ -149,7 +149,27 @@ AirPlay.prototype.property = function property (name, value, cb) {
 AirPlay.prototype._request = function _request (method, path, body, cb) {
   if (typeof body === 'function') return this._request(method, path, null, body)
 
-  var opts = this._reqOpts(method, path, body)
+  var opts = {
+    host: this.host,
+    port: this.port,
+    method: method,
+    path: path,
+    headers: {
+      'User-Agent': USER_AGENT
+    },
+    agent: this._agent // The Apple TV will refuse to play if the play socket is closed
+  }
+
+  if (body && typeof body === 'object') {
+    body = bplist.encode(body)
+    opts.headers['Content-Type'] = 'application/x-apple-binary-plist'
+    opts.headers['Content-Length'] = body.length
+  } else if (typeof body === 'string') {
+    opts.headers['Content-Type'] = 'text/parameters'
+    opts.headers['Content-Length'] = Buffer.byteLength(body)
+  } else {
+    opts.headers['Content-Length'] = 0
+  }
 
   var req = http.request(opts, function (res) {
     if (res.statusCode !== 200) var err = new Error('Unexpected response from Apple TV: ' + res.statusCode)
@@ -180,32 +200,5 @@ AirPlay.prototype._request = function _request (method, path, body, cb) {
     })
   })
 
-  req.end(opts.body)
-}
-
-AirPlay.prototype._reqOpts = function _reqOpts (method, path, body) {
-  var opts = {
-    host: this.host,
-    port: this.port,
-    method: method,
-    path: path,
-    headers: {
-      'User-Agent': USER_AGENT
-    },
-    agent: this._agent // The Apple TV will refuse to play if the play socket is closed
-  }
-
-  if (body && typeof body === 'object') {
-    opts.body = bplist.encode(body)
-    opts.headers['Content-Type'] = 'application/x-apple-binary-plist'
-    opts.headers['Content-Length'] = opts.body.length
-  } else if (typeof body === 'string') {
-    opts.body = body
-    opts.headers['Content-Type'] = 'text/parameters'
-    opts.headers['Content-Length'] = Buffer.byteLength(opts.body)
-  } else {
-    opts.headers['Content-Length'] = 0
-  }
-
-  return opts
+  req.end(body)
 }
