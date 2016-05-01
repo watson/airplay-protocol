@@ -4,12 +4,10 @@ var util = require('util')
 var http = require('http')
 var EventEmitter = require('events').EventEmitter
 var concat = require('concat-stream')
-var reverseHttp = require('reverse-http')
 var plist = require('plist')
-var bplist = {
-  encode: require('bplist-creator'),
-  decode: require('bplist-parser').parseBuffer
-}
+var bplistEncode = require('bplist-creator')
+var bplistDecode = require('bplist-parser').parseBuffer
+var reverseHttp = require('reverse-http')
 
 var USER_AGENT = 'iTunes/11.0.2'
 var noop = function () {}
@@ -129,7 +127,7 @@ AirPlay.prototype._request = function _request (method, path, body, cb) {
   }
 
   if (body && typeof body === 'object') {
-    body = bplist.encode(body)
+    body = bplistEncode(body)
     opts.headers['Content-Type'] = 'application/x-apple-binary-plist'
     opts.headers['Content-Length'] = body.length
   } else if (typeof body === 'string') {
@@ -149,7 +147,7 @@ AirPlay.prototype._request = function _request (method, path, body, cb) {
 
       switch (res.headers['content-type']) {
         case 'application/x-apple-binary-plist':
-          body = bplist.decode(body)[0]
+          body = bplistDecode(body)[0]
           break
         case 'text/x-apple-plist+xml':
           body = plist.parse(body.toString())
