@@ -32,7 +32,7 @@ function AirPlay (host, port) {
   })
 }
 
-AirPlay.prototype._startReverse = function () {
+AirPlay.prototype._startReverse = function _startReverse () {
   if (this._rserver) this._rserver.destroy()
 
   var self = this
@@ -72,11 +72,11 @@ AirPlay.prototype._startReverse = function () {
   })
 }
 
-AirPlay.prototype.close = function (cb) {
+AirPlay.prototype.close = function close (cb) {
   if (this._rserver) this._rserver.close(cb)
 }
 
-AirPlay.prototype.destroy = function () {
+AirPlay.prototype.destroy = function destroy () {
   if (this._rserver) this._rserver.destroy()
   this._agent.destroy()
 }
