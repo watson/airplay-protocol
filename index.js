@@ -82,7 +82,7 @@ AirPlay.prototype.destroy = function () {
 }
 
 AirPlay.prototype.serverInfo = function serverInfo (cb) {
-  this._request('GET', '/server-info', cb)
+  this._get('/server-info', cb)
 }
 
 AirPlay.prototype.play = function play (url, position, cb) {
@@ -93,7 +93,7 @@ AirPlay.prototype.play = function play (url, position, cb) {
   var body = 'Content-Location: ' + url + '\n' +
              'Start-Position: ' + position + '\n'
 
-  this._request('POST', '/play', body, cb || noop)
+  this._post('/play', body, cb || noop)
 }
 
 AirPlay.prototype.scrub = function scrub (position, cb) {
@@ -112,7 +112,7 @@ AirPlay.prototype.scrub = function scrub (position, cb) {
 }
 
 AirPlay.prototype.rate = function rate (speed, cb) {
-  this._request('POST', '/rate?value=' + speed, cb || noop)
+  this._post('/rate?value=' + speed, cb || noop)
 }
 
 AirPlay.prototype.pause = function pause (cb) {
@@ -124,11 +124,11 @@ AirPlay.prototype.resume = function pause (cb) {
 }
 
 AirPlay.prototype.stop = function stop (cb) {
-  this._request('POST', '/stop', cb || noop)
+  this._post('/stop', cb || noop)
 }
 
 AirPlay.prototype.playbackInfo = function playbackInfo (cb) {
-  this._request('GET', '/playback-info', cb)
+  this._get('/playback-info', cb)
 }
 
 AirPlay.prototype.property = function property (name, value, cb) {
@@ -144,6 +144,14 @@ AirPlay.prototype.property = function property (name, value, cb) {
   }
 
   this._request(method, path, value, cb)
+}
+
+AirPlay.prototype._get = function _get (path, body, cb) {
+  this._request('GET', path, body, cb)
+}
+
+AirPlay.prototype._post = function _post (path, body, cb) {
+  this._request('POST', path, body, cb)
 }
 
 AirPlay.prototype._request = function _request (method, path, body, cb) {
