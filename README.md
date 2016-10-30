@@ -156,6 +156,19 @@ Arguments:
   Error object. The second argument is an instance of
   [`http.IncomingMessage`][1]
 
+### `airplay.volume(volume[, callback])`
+
+Change the playback volume. This is only supported on Apple TV v4+.
+
+Arguments:
+
+- `volume` - A float value representing the playback volume: 0 is muted,
+  1 is full volume.
+- `callback` (optional) - Will be called when the request have been
+  processed by the AirPlay server. The first argument is an optional
+  Error object. The second argument is an instance of
+  [`http.IncomingMessage`][1]
+
 ### `airplay.pause([callback])`
 
 Pause playback.

@@ -192,6 +192,29 @@ test('rate', function (t) {
   })
 })
 
+test('volume', function (t) {
+  var server = http.createServer(function (req, res) {
+    t.equal(req.method, 'POST')
+    t.equal(req.url, '/volume?value=0.42')
+    res.end()
+  })
+
+  server.on('upgrade', onUpgrade)
+
+  server.listen(function () {
+    var airplay = new AirPlay('localhost', server.address().port)
+
+    airplay.volume(0.42, function (err, res, body) {
+      server.close()
+      airplay.destroy()
+      t.error(err)
+      t.equal(res.statusCode, 200)
+      t.deepEqual(body, Buffer(0))
+      t.end()
+    })
+  })
+})
+
 test('pause', function (t) {
   var server = http.createServer(function (req, res) {
     t.equal(req.method, 'POST')

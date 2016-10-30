@@ -74,6 +74,10 @@ AirPlay.prototype.rate = function rate (speed, cb) {
   this._post('/rate?value=' + speed, cb || noop)
 }
 
+AirPlay.prototype.volume = function volume (volume, cb) {
+  this._post('/volume?value=' + volume, cb || noop)
+}
+
 AirPlay.prototype.pause = function pause (cb) {
   this.rate(0, cb)
 }
