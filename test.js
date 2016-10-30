@@ -37,7 +37,7 @@ test('airplay.state', function (t) {
 
     airplay._startReverse()
 
-    t.equal(airplay.state, undefined)
+    t.equal(airplay.state, null)
 
     airplay.on('event', function (event) {
       server.close()

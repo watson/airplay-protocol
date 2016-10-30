@@ -90,7 +90,7 @@ Example event object indicating an update to the access log:
 ### `airplay.state`
 
 Property holding the latest playback state emitted by the `event` event.
-Will be `undefined` if no `event` event have been emitted yet.
+Will be `null` if no `event` event have been emitted yet.
 
 Possible states: `loading`, `playing`, `paused` or `stopped`.
 

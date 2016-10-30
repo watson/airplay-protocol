@@ -23,7 +23,8 @@ function AirPlay (host, port) {
 
   this.host = host
   this.port = port || 7000
-
+  this.state = null
+  this._rserver = null
   this._agent = new http.Agent({
     keepAlive: true,
     maxSockets: 1
