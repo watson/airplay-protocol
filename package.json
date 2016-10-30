@@ -7,7 +7,7 @@
     "bplist-creator": "^0.0.7",
     "bplist-parser": "^0.1.1",
     "concat-stream": "^1.5.2",
-    "plist": "^1.2.0",
+    "plist": "^2.0.1",
     "reverse-http": "^1.2.0"
   },
   "devDependencies": {
