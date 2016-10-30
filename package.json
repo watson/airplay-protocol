@@ -11,8 +11,8 @@
     "reverse-http": "^1.2.0"
   },
   "devDependencies": {
-    "standard": "^6.0.8",
-    "tape": "^4.5.1"
+    "standard": "^8.5.0",
+    "tape": "^4.6.2"
   },
   "scripts": {
     "test": "standard && tape test.js"
