@@ -4,7 +4,7 @@
   "description": "A low level protocol wrapper on top of the AirPlay HTTP API",
   "main": "index.js",
   "dependencies": {
-    "bplist-creator": "^0.0.6",
+    "bplist-creator": "^0.0.7",
     "bplist-parser": "^0.1.1",
     "concat-stream": "^1.5.1",
     "plist": "^1.2.0",
